@@ -33,6 +33,16 @@ async def search_player_by_name(name: str):
         response = await client.get(f"{API_URL}/players", headers=HEADERS, params=params)
         response.raise_for_status()
         return response.json()
+
+async def get_player_by_id(player_id: int):
+    """
+    根据球员ID获取球员信息
+    """
+    async with httpx.AsyncClient() as client:
+        params = {"id": player_id}
+        response = await client.get(f"{API_URL}/players", headers=HEADERS, params=params)
+        response.raise_for_status()
+        return response.json()
     
 async def get_player_statistics(player_id: int, season: str):
     """

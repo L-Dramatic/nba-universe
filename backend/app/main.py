@@ -103,11 +103,13 @@ async def get_player_details(player_id: int, season: str = Query("2023")):
             avg_stats = { "games_played": total_games, "points": round(total_points / total_games, 1) if total_games > 0 else 0, "rebounds": round(total_rebounds / total_games, 1) if total_games > 0 else 0, "assists": round(total_assists / total_games, 1) if total_games > 0 else 0, "steals": round(total_steals / total_games, 1) if total_games > 0 else 0, "blocks": round(total_blocks / total_games, 1) if total_games > 0 else 0 }
             player_info = game_stats_list[0].get("player", {}); team_info = game_stats_list[0].get("team", {})
         else:
-            player_info_data = await nba_service.search_player_by_name(str(player_id))
+            # 修复：当没有统计数据时，通过ID获取球员基本信息
+            player_info_data = await nba_service.get_player_by_id(player_id)
             if player_info_data.get("response"):
-                for p in player_info_data["response"]:
-                    if p.get('id') == player_id: player_info = p; break
-        player_info['team'] = team_info
+                player_info = player_info_data["response"][0]
+        # 修复：只有当有球队信息时才赋值，避免覆盖球员原有的球队信息
+        if team_info:
+            player_info['team'] = team_info
         news_data = {}
         if player_info.get("firstname") and player_info.get("lastname"):
             full_name = f"{player_info['firstname']} {player_info['lastname']}"
