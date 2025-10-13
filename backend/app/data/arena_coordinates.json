@@ -1,0 +1,272 @@
+{
+    "ATL": {
+        "team_name": "Atlanta Hawks",
+        "arena_name": "State Farm Arena",
+        "address": "1 State Farm Dr, Atlanta, GA 30303",
+        "coordinates": {
+            "longitude": -84.3963,
+            "latitude": 33.7573
+        }
+    },
+    "BOS": {
+        "team_name": "Boston Celtics",
+        "arena_name": "TD Garden",
+        "address": "100 Legends Way, Boston, MA 02114",
+        "coordinates": {
+            "longitude": -71.0622,
+            "latitude": 42.3663
+        }
+    },
+    "BKN": {
+        "team_name": "Brooklyn Nets",
+        "arena_name": "Barclays Center",
+        "address": "620 Atlantic Ave, Brooklyn, NY 11217",
+        "coordinates": {
+            "longitude": -73.9754,
+            "latitude": 40.6826
+        }
+    },
+    "CHA": {
+        "team_name": "Charlotte Hornets",
+        "arena_name": "Spectrum Center",
+        "address": "333 E Trade St, Charlotte, NC 28202",
+        "coordinates": {
+            "longitude": -80.8392,
+            "latitude": 35.2251
+        }
+    },
+    "CHI": {
+        "team_name": "Chicago Bulls",
+        "arena_name": "United Center",
+        "address": "1901 W Madison St, Chicago, IL 60612",
+        "coordinates": {
+            "longitude": -87.6743,
+            "latitude": 41.8807
+        }
+    },
+    "CLE": {
+        "team_name": "Cleveland Cavaliers",
+        "arena_name": "Rocket Mortgage FieldHouse",
+        "address": "1 Center Ct, Cleveland, OH 44115",
+        "coordinates": {
+            "longitude": -81.6882,
+            "latitude": 41.4966
+        }
+    },
+    "DAL": {
+        "team_name": "Dallas Mavericks",
+        "arena_name": "American Airlines Center",
+        "address": "2500 Victory Ave, Dallas, TX 75219",
+        "coordinates": {
+            "longitude": -96.8103,
+            "latitude": 32.7905
+        }
+    },
+    "DEN": {
+        "team_name": "Denver Nuggets",
+        "arena_name": "Ball Arena",
+        "address": "1000 Chopper Cir, Denver, CO 80204",
+        "coordinates": {
+            "longitude": -105.0077,
+            "latitude": 39.7487
+        }
+    },
+    "DET": {
+        "team_name": "Detroit Pistons",
+        "arena_name": "Little Caesars Arena",
+        "address": "2645 Woodward Ave, Detroit, MI 48201",
+        "coordinates": {
+            "longitude": -83.0552,
+            "latitude": 42.3411
+        }
+    },
+    "GSW": {
+        "team_name": "Golden State Warriors",
+        "arena_name": "Chase Center",
+        "address": "1 Warriors Way, San Francisco, CA 94158",
+        "coordinates": {
+            "longitude": -122.3875,
+            "latitude": 37.7680
+        }
+    },
+    "HOU": {
+        "team_name": "Houston Rockets",
+        "arena_name": "Toyota Center",
+        "address": "1510 Polk St, Houston, TX 77002",
+        "coordinates": {
+            "longitude": -95.3621,
+            "latitude": 29.7508
+        }
+    },
+    "IND": {
+        "team_name": "Indiana Pacers",
+        "arena_name": "Gainbridge Fieldhouse",
+        "address": "125 S Pennsylvania St, Indianapolis, IN 46204",
+        "coordinates": {
+            "longitude": -86.1555,
+            "latitude": 39.7640
+        }
+    },
+    "LAC": {
+        "team_name": "Los Angeles Clippers",
+        "arena_name": "Crypto.com Arena",
+        "address": "1111 S Figueroa St, Los Angeles, CA 90015",
+        "coordinates": {
+            "longitude": -118.2673,
+            "latitude": 34.0430
+        }
+    },
+    "LAL": {
+        "team_name": "Los Angeles Lakers",
+        "arena_name": "Crypto.com Arena",
+        "address": "1111 S Figueroa St, Los Angeles, CA 90015",
+        "coordinates": {
+            "longitude": -118.2673,
+            "latitude": 34.0430
+        }
+    },
+    "MEM": {
+        "team_name": "Memphis Grizzlies",
+        "arena_name": "FedExForum",
+        "address": "191 Beale St, Memphis, TN 38103",
+        "coordinates": {
+            "longitude": -90.0506,
+            "latitude": 35.1382
+        }
+    },
+    "MIA": {
+        "team_name": "Miami Heat",
+        "arena_name": "Kaseya Center",
+        "address": "601 Biscayne Blvd, Miami, FL 33132",
+        "coordinates": {
+            "longitude": -80.1879,
+            "latitude": 25.7814
+        }
+    },
+    "MIL": {
+        "team_name": "Milwaukee Bucks",
+        "arena_name": "Fiserv Forum",
+        "address": "1111 Vel R. Phillips Ave, Milwaukee, WI 53203",
+        "coordinates": {
+            "longitude": -87.9171,
+            "latitude": 43.0451
+        }
+    },
+    "MIN": {
+        "team_name": "Minnesota Timberwolves",
+        "arena_name": "Target Center",
+        "address": "600 N 1st Ave, Minneapolis, MN 55403",
+        "coordinates": {
+            "longitude": -93.2762,
+            "latitude": 44.9795
+        }
+    },
+    "NOP": {
+        "team_name": "New Orleans Pelicans",
+        "arena_name": "Smoothie King Center",
+        "address": "1501 Dave Dixon Dr, New Orleans, LA 70113",
+        "coordinates": {
+            "longitude": -90.0821,
+            "latitude": 29.9490
+        }
+    },
+    "NYK": {
+        "team_name": "New York Knicks",
+        "arena_name": "Madison Square Garden",
+        "address": "4 Pennsylvania Plaza, New York, NY 10001",
+        "coordinates": {
+            "longitude": -73.9936,
+            "latitude": 40.7505
+        }
+    },
+    "OKC": {
+        "team_name": "Oklahoma City Thunder",
+        "arena_name": "Paycom Center",
+        "address": "100 W Reno Ave, Oklahoma City, OK 73102",
+        "coordinates": {
+            "longitude": -97.5151,
+            "latitude": 35.4634
+        }
+    },
+    "ORL": {
+        "team_name": "Orlando Magic",
+        "arena_name": "Kia Center",
+        "address": "400 W Church St, Orlando, FL 32801",
+        "coordinates": {
+            "longitude": -81.3839,
+            "latitude": 28.5392
+        }
+    },
+    "PHI": {
+        "team_name": "Philadelphia 76ers",
+        "arena_name": "Wells Fargo Center",
+        "address": "3601 S Broad St, Philadelphia, PA 19148",
+        "coordinates": {
+            "longitude": -75.1720,
+            "latitude": 39.9012
+        }
+    },
+    "PHX": {
+        "team_name": "Phoenix Suns",
+        "arena_name": "Footprint Center",
+        "address": "201 E Jefferson St, Phoenix, AZ 85004",
+        "coordinates": {
+            "longitude": -112.0712,
+            "latitude": 33.4458
+        }
+    },
+    "POR": {
+        "team_name": "Portland Trail Blazers",
+        "arena_name": "Moda Center",
+        "address": "1 N Center Ct St, Portland, OR 97227",
+        "coordinates": {
+            "longitude": -122.6668,
+            "latitude": 45.5316
+        }
+    },
+    "SAC": {
+        "team_name": "Sacramento Kings",
+        "arena_name": "Golden 1 Center",
+        "address": "500 David J Stern Walk, Sacramento, CA 95814",
+        "coordinates": {
+            "longitude": -121.5007,
+            "latitude": 38.5802
+        }
+    },
+    "SAS": {
+        "team_name": "San Antonio Spurs",
+        "arena_name": "Frost Bank Center",
+        "address": "1 AT&T Center Parkway, San Antonio, TX 78219",
+        "coordinates": {
+            "longitude": -98.4375,
+            "latitude": 29.4270
+        }
+    },
+    "TOR": {
+        "team_name": "Toronto Raptors",
+        "arena_name": "Scotiabank Arena",
+        "address": "40 Bay St, Toronto, ON M5J 2X2, Canada",
+        "coordinates": {
+            "longitude": -79.3791,
+            "latitude": 43.6435
+        }
+    },
+    "UTA": {
+        "team_name": "Utah Jazz",
+        "arena_name": "Delta Center",
+        "address": "301 S Temple, Salt Lake City, UT 84101",
+        "coordinates": {
+            "longitude": -111.9012,
+            "latitude": 40.7683
+        }
+    },
+    "WAS": {
+        "team_name": "Washington Wizards",
+        "arena_name": "Capital One Arena",
+        "address": "601 F St NW, Washington, D.C. 20004",
+        "coordinates": {
+            "longitude": -77.0209,
+            "latitude": 38.8982
+        }
+    }
+}
