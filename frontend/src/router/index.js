@@ -19,6 +19,11 @@ const router = createRouter({
       name: 'leaders',
       component: () => import('../views/Leaders.vue')
     },
+    {
+      path: '/news',
+      name: 'news',
+      component: () => import('../views/News.vue')
+    },
     // 新增搜索结果页的路由
     {
       path: '/search-results/:query',

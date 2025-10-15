@@ -15,6 +15,7 @@
           <router-link to="/" class="nav-link text-white">Search</router-link>
           <router-link to="/schedule" class="nav-link text-blue-300">Schedule</router-link>
           <router-link to="/leaders" class="nav-link text-blue-300">Leaders</router-link>
+          <router-link to="/news" class="nav-link text-blue-300">News</router-link>
         </div>
       </nav>
     </header>

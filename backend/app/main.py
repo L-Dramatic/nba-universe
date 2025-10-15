@@ -247,3 +247,19 @@ async def get_league_leaders(category: str, season: str = Query("2023")):
         return leaders_data[:20]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to get league leaders: {str(e)}")
+
+@app.get("/news/hot")
+async def get_hot_news():
+    """
+    获取NBA热点新闻
+    """
+    try:
+        news_data = await news_service.get_news_by_keyword("NBA")
+        # 如果没有返回articles，返回空数组
+        if not news_data or "articles" not in news_data:
+            return {"articles": []}
+        return news_data
+    except Exception as e:
+        print(f"Error fetching hot news: {e}")
+        # 返回空数组而不是抛出异常
+        return {"articles": []}

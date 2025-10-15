@@ -20,6 +20,7 @@ export const useNbaStore = defineStore('nba', {
         // 用于赛程页和榜单页
         schedule: [],
         leaders: {}, // key是类别(e.g., 'points'), value是榜单数组
+        hotNews: [], // 热点新闻列表
 
         // 全局状态
         isLoading: false, // 全局加载状态，方便任何组件显示加载动画
@@ -171,6 +172,29 @@ export const useNbaStore = defineStore('nba', {
             } catch (err) {
                 this._handleApiError(`Failed to fetch leaders for category ${category}`, err);
                 return null;
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
+        /**
+         * 获取NBA热点新闻
+         */
+        async fetchHotNews() {
+            // 如果已有缓存且在30分钟内，直接返回
+            if (this.hotNews.length > 0) {
+                return this.hotNews;
+            }
+            
+            this.isLoading = true;
+            this.error = null;
+            try {
+                const response = await apiClient.get('/news/hot');
+                this.hotNews = response.data.articles || response.data || [];
+                return this.hotNews;
+            } catch (err) {
+                this._handleApiError('Failed to fetch hot news', err);
+                return [];
             } finally {
                 this.isLoading = false;
             }
