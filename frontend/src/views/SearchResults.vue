@@ -35,9 +35,18 @@
                     <router-link v-for="player in store.players" :key="player.id"
                         :to="{ name: 'player-detail', params: { playerId: player.id } }"
                         class="flex items-center p-4 bg-white rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <div
-                            class="w-12 h-12 mr-5 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-500 text-xl">
-                            {{ player.firstname.charAt(0) }}{{ player.lastname.charAt(0) }}
+                        <!-- 球员头像（真实照片或首字母备用） -->
+                        <div class="w-12 h-12 mr-5 flex-shrink-0">
+                            <img v-if="player.nba_official_id"
+                                :src="`https://cdn.nba.com/headshots/nba/latest/1040x760/${player.nba_official_id}.png`"
+                                @error="e => e.target.style.display='none'"
+                                class="w-full h-full rounded-full object-cover border-2 border-gray-200"
+                                :alt="`${player.firstname} ${player.lastname}`">
+                            <!-- 备用首字母头像 -->
+                            <div v-if="!player.nba_official_id"
+                                class="w-full h-full bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center font-bold text-white text-xl">
+                                {{ player.firstname.charAt(0) }}{{ player.lastname.charAt(0) }}
+                            </div>
                         </div>
                         <div>
                             <p class="font-bold text-lg text-gray-800">{{ player.firstname }} {{ player.lastname }}</p>

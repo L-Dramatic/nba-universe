@@ -76,20 +76,28 @@ export const useNbaStore = defineStore('nba', {
         /**
          * 获取并缓存球队的详细信息
          * @param {string} teamName - 球队名称
+         * @param {string} season - 赛季年份 (e.g., "2023")
          */
-        async fetchTeamDetails(teamName) {
+        async fetchTeamDetails(teamName, season = '2023') {
+            // 缓存键包含赛季信息
+            const cacheKey = `${teamName}_${season}`;
+            
             // 如果缓存中已有，则直接从缓存返回，避免重复API调用
-            if (this.teamDetails[teamName]) {
-                console.log('Fetching team details from cache:', teamName);
-                return this.teamDetails[teamName];
+            if (this.teamDetails[cacheKey]) {
+                console.log('Fetching team details from cache:', cacheKey);
+                return this.teamDetails[cacheKey];
             }
 
             this.isLoading = true;
             this.error = null;
             try {
-                const response = await apiClient.get(`/team-details/${teamName}`);
+                const params = {};
+                if (season) {
+                    params.season = season;
+                }
+                const response = await apiClient.get(`/team-details/${teamName}`, { params });
                 // 请求成功后，将结果存入state中的缓存对象
-                this.teamDetails[teamName] = response.data;
+                this.teamDetails[cacheKey] = response.data;
                 return response.data;
             } catch (err) {
                 this._handleApiError(`Failed to fetch details for team ${teamName}`, err);
@@ -147,16 +155,18 @@ export const useNbaStore = defineStore('nba', {
         /**
          * 获取并缓存联盟球员榜单
          * @param {string} category - 榜单类别 (points, rebounds, etc.)
+         * @param {string} season - 赛季年份 (2023, 2022, etc.)
          */
-        async fetchLeaders(category) {
-            if (this.leaders[category]) {
-                return this.leaders[category];
+        async fetchLeaders(category, season = '2023') {
+            const key = `${category}_${season}`;
+            if (this.leaders[key]) {
+                return this.leaders[key];
             }
             this.isLoading = true;
             this.error = null;
             try {
-                const response = await apiClient.get(`/leaders/${category}`);
-                this.leaders[category] = response.data;
+                const response = await apiClient.get(`/leaders/${category}?season=${season}`);
+                this.leaders[key] = response.data;
                 return response.data;
             } catch (err) {
                 this._handleApiError(`Failed to fetch leaders for category ${category}`, err);

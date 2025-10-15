@@ -14,6 +14,11 @@ const router = createRouter({
       name: 'schedule',
       component: () => import('../views/Schedule.vue')
     },
+    {
+      path: '/leaders',
+      name: 'leaders',
+      component: () => import('../views/Leaders.vue')
+    },
     // 新增搜索结果页的路由
     {
       path: '/search-results/:query',

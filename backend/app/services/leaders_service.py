@@ -1,10 +1,56 @@
 import asyncio
 from nba_api.stats.endpoints import leagueleaders
+from nba_api.stats.static import players
 from cachetools import TTLCache
 import pandas as pd
+import httpx
 
 # 同样为榜单数据创建一个缓存
 leaders_cache = TTLCache(maxsize=10, ttl=3600) # 缓存1小时
+
+# 球员ID缓存（永久缓存，因为球员ID不会变）
+player_id_cache = {}
+
+# API-Sports ID 缓存（NBA官方ID -> API-Sports ID）
+api_sports_id_cache = {}
+
+def get_nba_player_id_by_name(firstname: str, lastname: str):
+    """
+    通过球员姓名获取 NBA 官方 ID
+    这个 ID 可以直接用于构建 NBA.com 的头像 URL
+    
+    Args:
+        firstname: 球员名字
+        lastname: 球员姓氏
+        
+    Returns:
+        NBA 官方球员 ID，如果找不到返回 None
+    """
+    cache_key = f"{firstname}_{lastname}"
+    
+    # 检查缓存
+    if cache_key in player_id_cache:
+        return player_id_cache[cache_key]
+    
+    try:
+        # 获取所有球员列表（这个操作很快，nba_api 会缓存）
+        all_players = players.get_players()
+        
+        # 搜索匹配的球员（不区分大小写）
+        for player in all_players:
+            if (player['first_name'].lower() == firstname.lower() and 
+                player['last_name'].lower() == lastname.lower()):
+                player_id = player['id']
+                # 缓存结果
+                player_id_cache[cache_key] = player_id
+                print(f"✓ Found NBA official ID for {firstname} {lastname}: {player_id}")
+                return player_id
+        
+        print(f"✗ No NBA official ID found for {firstname} {lastname}")
+        return None
+    except Exception as e:
+        print(f"Error searching for player {firstname} {lastname}: {e}")
+        return None
 
 def get_leaders_sync(category: str, season: str):
     """

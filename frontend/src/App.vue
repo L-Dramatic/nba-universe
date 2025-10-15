@@ -13,9 +13,8 @@
         <!-- 右侧: 导航链接 -->
         <div class="space-x-6">
           <router-link to="/" class="nav-link text-white">Search</router-link>
-          <!-- 将 a 标签改为 router-link -->
           <router-link to="/schedule" class="nav-link text-blue-300">Schedule</router-link>
-          <a href="#" class="nav-link text-blue-300 cursor-not-allowed">Leaders</a>
+          <router-link to="/leaders" class="nav-link text-blue-300">Leaders</router-link>
         </div>
       </nav>
     </header>
