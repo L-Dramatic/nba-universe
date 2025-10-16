@@ -109,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useNbaStore } from '../stores/nbaStore';
 import LoadingSpinner from '../components/ui/LoadingSpinner.vue';
 import ErrorMessage from '../components/ui/ErrorMessage.vue';
@@ -125,6 +125,11 @@ const store = useNbaStore();
 const teamData = ref(null);
 const isLoading = ref(true);
 const error = ref(null);
+
+// 赛季选择器
+const availableSeasons = ['2023', '2022', '2021']; // 免费 API 支持的赛季
+const selectedSeason = ref('2023');
+const isLoadingRoster = ref(false);
 
 // 新闻分页
 const newsToShow = ref(5);
@@ -146,13 +151,34 @@ const loadMoreNews = () => {
     newsToShow.value += 5;
 };
 
-onMounted(async () => {
-    const data = await store.fetchTeamDetails(props.teamName);
-    if (data) {
-        teamData.value = data;
-    } else {
-        error.value = store.error || 'Failed to load team data.';
+// 获取球队详情（带赛季参数）
+const fetchTeamData = async (season) => {
+    try {
+        isLoadingRoster.value = true;
+        const data = await store.fetchTeamDetails(props.teamName, season);
+        if (data) {
+            teamData.value = data;
+        } else {
+            error.value = store.error || 'Failed to load team data.';
+        }
+    } catch (err) {
+        console.error('Error fetching team data:', err);
+        error.value = 'Failed to load team data.';
+    } finally {
+        isLoadingRoster.value = false;
     }
+};
+
+// 监听赛季变化
+watch(selectedSeason, async (newSeason) => {
+    if (teamData.value) {
+        await fetchTeamData(newSeason);
+    }
+});
+
+onMounted(async () => {
+    isLoading.value = true;
+    await fetchTeamData(selectedSeason.value);
     isLoading.value = false;
 });
 </script>
