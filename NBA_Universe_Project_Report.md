@@ -1,7 +1,7 @@
 # NBA Universe: A Mashup Web Application
 ## Design and Implementation Report
 
-**Student Name:** Li Xingshuo (李星烁)  
+**Student Name:** Li Xingshuo  
 **Student ID:** 2351877  
 **Institution:** Tongji University  
 **Course:** Microservice Architecture  
@@ -1194,8 +1194,6 @@ This project has prepared me for real-world scenarios where applications increas
 ---
 
 **End of Report**
-
-**Total Pages**: Approximately 20 pages (formatted in Word with standard margins and 11pt font)
 
 **Submission Date**: October 27, 2025
 
