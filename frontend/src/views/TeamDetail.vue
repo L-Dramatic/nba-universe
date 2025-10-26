@@ -20,17 +20,21 @@
                 </div>
             </header>
 
-            <!-- 2. 城市背景 & 关键数据 (增强版) -->
+            <!-- 2. 球队基本信息 -->
             <section>
-                <SectionTitle>City Context & Key Info</SectionTitle>
+                <SectionTitle>Team Information</SectionTitle>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <StatBox label="City" :value="teamData.team_info.city" />
-                    <StatBox v-if="teamData.city_context.weather" label="Weather"
-                        :value="`${Math.round(teamData.city_context.weather.main.temp)}°C`"
-                        :subtext="teamData.city_context.weather.weather[0].description" />
+                    <StatBox label="Code" :value="teamData.team_info.code" />
                     <StatBox label="Conference" :value="teamData.team_info.leagues.standard.conference" />
                     <StatBox label="Division" :value="teamData.team_info.leagues.standard.division" />
                 </div>
+            </section>
+
+            <!-- 3. 天气信息（使用新的综合天气卡片） -->
+            <section v-if="teamData.city_context.weather">
+                <SectionTitle>City Weather & Environment</SectionTitle>
+                <WeatherCard :weatherData="teamData.city_context.weather" />
             </section>
 
             <!-- 3. 球员名单 (增强版) -->
@@ -117,6 +121,7 @@ import SectionTitle from '../components/ui/SectionTitle.vue';
 import StatBox from '../components/nba/StatBox.vue';
 import PlayerCard from '../components/nba/PlayerCard.vue';
 import NewsListItem from '../components/nba/NewsListItem.vue';
+import WeatherCard from '../components/nba/WeatherCard.vue';
 
 const props = defineProps({
     teamName: { type: String, required: true }

@@ -10,6 +10,7 @@ import traceback
 from app.services import nba_service, news_service, weather_service, image_service, leaders_service
 from app.services.leaders_service import get_nba_player_id_by_name
 from app.data_loader import get_arena_coordinates
+from app.city_mapping import get_weather_city_name
 
 # --- App Initialization ---
 app = FastAPI(
@@ -80,25 +81,48 @@ async def get_team_details(team_name: str, season: str = Query("2023")):  # 免�
             raise HTTPException(status_code=404, detail=f"Team '{team_name}' not found")
         
         team_info = team_search_result["response"][0]
-        team_id, city, full_name, code = team_info["id"], team_info["city"], team_info["name"], team_info["code"]
+        
+        # 安全地提取字段，使用 .get() 避免 KeyError
+        team_id = team_info.get("id")
+        city = team_info.get("city", "")
+        full_name = team_info.get("name", "")
+        code = team_info.get("code", "")
+        
+        # 使用城市映射模块转换城市名，确保与天气API兼容
+        weather_city = get_weather_city_name(city)
+        
+        print(f"\n{'='*60}")
+        print(f"[Team Details] Fetching data for: {full_name}")
+        print(f"  - Team ID: {team_id}")
+        print(f"  - Team Code: {code}")
+        print(f"  - Original City: '{city}'")
+        print(f"  - Weather City: '{weather_city}'")
+        print(f"{'='*60}\n")
 
+        # 并发获取数据，确保即使某个API失败也不影响其他
         results = await asyncio.gather(
-            nba_service.get_team_roster(team_id, season),
-            news_service.get_news_by_keyword(full_name),
-            weather_service.get_weather_by_city(city),
-            image_service.get_image_url_by_keyword(city),
+            nba_service.get_team_roster(team_id, season) if team_id else None,
+            news_service.get_news_by_keyword(full_name) if full_name else None,
+            weather_service.get_comprehensive_weather(weather_city) if weather_city else None,  # 使用综合天气API
+            image_service.get_image_url_by_keyword(city) if city else None,
             return_exceptions=True
         )
         roster_data, news_data, weather_data, image_url = results
-        arena_coords = get_arena_coordinates(code)
+        arena_coords = get_arena_coordinates(code) if code else None
 
         return {
             "team_info": team_info,
-            "city_context": {"weather": weather_data if not isinstance(weather_data, Exception) else None, "image_url": image_url if not isinstance(image_url, Exception) else None, "arena_coordinates": arena_coords},
-            "roster": roster_data.get("response", []) if not isinstance(roster_data, Exception) else [],
-            "news": news_data.get("articles", []) if not isinstance(news_data, Exception) else []
+            "city_context": {
+                "weather": weather_data if weather_data and not isinstance(weather_data, Exception) else None, 
+                "image_url": image_url if image_url and not isinstance(image_url, Exception) else None, 
+                "arena_coordinates": arena_coords
+            },
+            "roster": roster_data.get("response", []) if roster_data and not isinstance(roster_data, Exception) else [],
+            "news": news_data.get("articles", []) if news_data and not isinstance(news_data, Exception) else []
         }
     except Exception as e:
+        print(f"Error in get_team_details: {str(e)}")
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"An unexpected error occurred: {str(e)}")
 
 @app.get("/player-details/{player_id}")
@@ -263,3 +287,50 @@ async def get_hot_news():
         print(f"Error fetching hot news: {e}")
         # 返回空数组而不是抛出异常
         return {"articles": []}
+
+@app.get("/debug/weather-mapping")
+async def debug_weather_mapping():
+    """
+    诊断工具：检查所有NBA球队的天气API兼容性
+    返回每个球队的城市名和对应的天气城市名
+    """
+    from app.city_mapping import CITY_WEATHER_MAPPING, get_weather_city_name
+    
+    # 常见的NBA球队及其城市（示例）
+    test_teams = [
+        "Los Angeles Lakers", "Los Angeles Clippers", "Golden State Warriors",
+        "Boston Celtics", "New York Knicks", "Brooklyn Nets",
+        "Chicago Bulls", "Miami Heat", "Toronto Raptors",
+        "Dallas Mavericks", "Phoenix Suns", "Denver Nuggets"
+    ]
+    
+    results = []
+    for team in test_teams:
+        try:
+            team_data = await nba_service.search_team_by_name(team)
+            if team_data.get("response"):
+                team_info = team_data["response"][0]
+                city = team_info.get("city", "")
+                weather_city = get_weather_city_name(city)
+                
+                # 测试天气API
+                weather_data = await weather_service.get_weather_by_city(weather_city) if weather_city else None
+                
+                results.append({
+                    "team": team_info.get("name"),
+                    "original_city": city,
+                    "weather_city": weather_city,
+                    "weather_available": weather_data is not None and not isinstance(weather_data, Exception),
+                    "weather_status": "✓ OK" if (weather_data and not isinstance(weather_data, Exception)) else "✗ Failed"
+                })
+        except Exception as e:
+            results.append({
+                "team": team,
+                "error": str(e)
+            })
+    
+    return {
+        "total_mappings": len(CITY_WEATHER_MAPPING),
+        "teams_tested": len(test_teams),
+        "results": results
+    }
